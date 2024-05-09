@@ -6,6 +6,11 @@ from .models import *
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['name', 'age']
+        # fields = ['name', 'age']
         # exclude = ['id']
-        # fields = '__all__'
+        fields = '__all__'
+
+    def validate(self, data):
+        if data['age'] < 18:
+            raise serializers.ValidationError("Age should be greater than 18")
+        return data
